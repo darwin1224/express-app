@@ -1,11 +1,12 @@
 import { PostController } from '../controllers/PostController';
+import { IAppRoutes } from 'types/AppRoutes';
 
 /**
  * App routes
  *
- * @type {{ method: string, route: string, controller: string, action: string }[]}
+ * @type {{ method: string, route: string, controller: function, action: string }[]}
  */
-export const AppRoutes = [
+export const AppRoutes: IAppRoutes[] = [
   {
     method: 'get',
     route: '/post',

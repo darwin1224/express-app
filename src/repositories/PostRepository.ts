@@ -4,6 +4,11 @@ import { PostModel } from '../models/PostModel';
 import { Post } from '../types/Post';
 
 export class PostRepository implements PostContract {
+  /**
+   * The model instance
+   *
+   * @type {Model<Post>}
+   */
   private post: Model<Post> = model<Post>('Post', PostModel);
 
   /**
@@ -19,7 +24,7 @@ export class PostRepository implements PostContract {
    * Get data by id
    *
    * @param {string} id
-   * @returns {DocumentQuery<Post | null, Post, {}>}
+   * @returns {DocumentQuery<Post | null, Post>}
    */
   public getPostById(id: string): DocumentQuery<Post | null, Post> {
     return this.post.findById(id);

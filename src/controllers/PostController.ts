@@ -51,31 +51,31 @@ export class PostController {
       : res.status(400).json({ error: 'Failed to insert data' });
   }
 
-  // /**
-  //  * Update data by id from storage
-  //  *
-  //  * @param {Request} req
-  //  * @param {Response} res
-  //  * @returns {Promise<Response>}
-  //  */
-  // public async update(req: Request, res: Response): Promise<Response> {
-  //   const data = await this.post.updatePost(Number(req.params.id), req.body);
-  //   return data
-  //     ? res.json(data)
-  //     : res.status(400).json({ error: 'Failed to update data' });
-  // }
+  /**
+   * Update data by id from storage
+   *
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<Response>}
+   */
+  public async update(req: Request, res: Response): Promise<Response> {
+    const data = await this.post.updatePost(req.params.id, req.body);
+    return data
+      ? res.json(data)
+      : res.status(400).json({ error: 'Failed to update data' });
+  }
 
-  // /**
-  //  * Delete data by id from storage
-  //  *
-  //  * @param {Request} req
-  //  * @param {Response} res
-  //  * @returns {Promise<Response>}
-  //  */
-  // public async destroy(req: Request, res: Response): Promise<Response> {
-  //   const data = await this.post.deletePost(Number(req.params.id));
-  //   return data
-  //     ? res.json(data)
-  //     : res.status(400).json({ error: 'Failed to delete data' });
-  // }
+  /**
+   * Delete data by id from storage
+   *
+   * @param {Request} req
+   * @param {Response} res
+   * @returns {Promise<Response>}
+   */
+  public async destroy(req: Request, res: Response): Promise<Response> {
+    const data = await this.post.deletePost(req.params.id);
+    return data
+      ? res.json(data)
+      : res.status(400).json({ error: 'Failed to delete data' });
+  }
 }
