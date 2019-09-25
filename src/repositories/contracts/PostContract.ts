@@ -1,4 +1,4 @@
-import { Post } from 'types/Post';
+import { Post } from '../../types/Post';
 import { DocumentQuery } from 'mongoose';
 
 export interface PostContract {
