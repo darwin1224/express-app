@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: backend
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - ${NODE_PORT}:${NODE_PORT}
+    depends_on:
+      - database
+    tty: true
+    restart: always
+    networks:
+      - app
+
+  database:
+    image: mongo:4.0.5-xenial
+    container_name: database
+    volumes:
+      - db:/data/db
+    ports:
+      - ${MONGODB_PORT}:${MONGODB_PORT}
+    tty: true
+    restart: always
+    networks:
+      - app
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    volumes:
+      - ./:/var/www/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - ${NGINX_PORT}:${NGINX_PORT}
+    depends_on:
+      - backend
+    tty: true
+    restart: always
+    networks:
+      - app
+
+volumes:
+  db:
+
+networks:
+  app:
