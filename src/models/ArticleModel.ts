@@ -1,6 +1,6 @@
 import { Schema } from 'mongoose';
 
-export const PostModel: Schema = new Schema({
+export const ArticleModel: Schema = new Schema({
   /**
    * Title field
    *
