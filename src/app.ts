@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
 import * as mongoose from 'mongoose';
@@ -42,10 +43,20 @@ class App {
    * @returns {void}
    */
   protected init(): void {
+    this.setUpCors();
     this.setUpBodyParser();
     this.setUpMorgan();
     this.setUpMongoDb();
     this.setRoutePath();
+  }
+
+  /**
+   * Set up cors
+   *
+   * @returns {void}
+   */
+  public setUpCors(): void {
+    this.app.use(cors());
   }
 
   /**
