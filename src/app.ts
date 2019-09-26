@@ -84,7 +84,10 @@ class App {
    * @returns {void}
    */
   protected setUpMongoDb(): void {
-    mongoose.connect(this.mongoUrl, { useNewUrlParser: true });
+    mongoose.connect(this.mongoUrl, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
     mongoose.connection.once('open', (): void => {
       console.log(`Database is connected at ${this.mongoUrl}`);
     });
