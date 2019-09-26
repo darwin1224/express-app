@@ -3,7 +3,9 @@ import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import * as morgan from 'morgan';
 import * as mongoose from 'mongoose';
-import { AppRoutes } from './routes';
+import { PostRoute } from './routes/PostRoute';
+import { ArticleRoute } from './routes/ArticleRoute';
+import { AuthRoute } from './routes/AuthRoute';
 
 class App {
   /**
@@ -12,6 +14,27 @@ class App {
    * @type {express.Application}
    */
   public app: express.Application = express();
+
+  /**
+   * Auth route instance
+   *
+   * @type {AuthRoute}
+   */
+  public auth: AuthRoute = new AuthRoute();
+
+  /**
+   * Post route instance
+   *
+   * @type {PostRoute}
+   */
+  public post: PostRoute = new PostRoute();
+
+  /**
+   * Article route instance
+   *
+   * @type {ArticleRoute}
+   */
+  public article: ArticleRoute = new ArticleRoute();
 
   /**
    * Port number
@@ -34,6 +57,7 @@ class App {
    */
   public constructor() {
     this.init();
+    this.setRoutePath();
     this.listen();
   }
 
@@ -47,7 +71,6 @@ class App {
     this.setUpBodyParser();
     this.setUpMorgan();
     this.setUpMongoDb();
-    this.setRoutePath();
   }
 
   /**
@@ -55,7 +78,7 @@ class App {
    *
    * @returns {void}
    */
-  public setUpCors(): void {
+  protected setUpCors(): void {
     this.app.use(cors());
   }
 
@@ -66,7 +89,7 @@ class App {
    */
   protected setUpBodyParser(): void {
     this.app.use(bodyParser.json());
-    this.app.use(bodyParser.urlencoded({ extended: true }));
+    this.app.use(bodyParser.urlencoded({ extended: false }));
   }
 
   /**
@@ -99,27 +122,36 @@ class App {
    * @returns {void}
    */
   protected setRoutePath(): void {
-    AppRoutes.forEach(route => {
-      (this.app as any)[route.method](
-        route.route,
-        (req: express.Request, res: express.Response, next: Function) => {
-          const result = new (route.controller as any)()[route.action](
-            req,
-            res,
-            next
-          );
-          if (result instanceof Promise) {
-            result.then(result =>
-              result !== null && result !== undefined
-                ? res.send(result)
-                : undefined
-            );
-          } else if (result !== null && result !== undefined) {
-            res.json(result);
-          }
-        }
-      );
-    });
+    this.setAuthRoute();
+    this.setPostRoute();
+    this.setArticleRoute();
+  }
+
+  /**
+   * Set auth routes
+   *
+   * @type {void}
+   */
+  protected setAuthRoute(): void {
+    this.auth.routes(this.app);
+  }
+
+  /**
+   * Set post routes
+   *
+   * @returns {void}
+   */
+  protected setPostRoute(): void {
+    this.post.routes(this.app);
+  }
+
+  /**
+   * Set article routes
+   *
+   * @returns {void}
+   */
+  protected setArticleRoute(): void {
+    this.article.routes(this.app);
   }
 
   /**
