@@ -1,5 +1,7 @@
+import * as joi from 'joi';
 import { Request, Response } from 'express';
 import { PostRepository } from '../repositories/PostRepository';
+import { PostRequest } from '../requests/PostRequest';
 
 export class PostController {
   /**
@@ -44,11 +46,17 @@ export class PostController {
    * @param {Response} res
    * @returns {Promise<Response>}
    */
-  public async store(req: Request, res: Response): Promise<Response> {
-    const data = await this.post.insertPost(req.body);
-    return data
-      ? res.status(201).json(data)
-      : res.status(400).json({ error: 'Failed to insert data' });
+  public async store(req: Request, res: Response): Promise<any> {
+    try {
+      const data = await this.post.insertPost(
+        await joi.validate(req.body, PostRequest.rules())
+      );
+      return data
+        ? res.status(201).json(data)
+        : res.status(400).json({ error: 'Failed to insert data' });
+    } catch (err) {
+      return res.status(400).json(err);
+    }
   }
 
   /**
@@ -59,10 +67,17 @@ export class PostController {
    * @returns {Promise<Response>}
    */
   public async update(req: Request, res: Response): Promise<Response> {
-    const data = await this.post.updatePost(req.params.id, req.body);
-    return data
-      ? res.json(data)
-      : res.status(400).json({ error: 'Failed to update data' });
+    try {
+      const data = await this.post.updatePost(
+        req.params.id,
+        await joi.validate(req.body, PostRequest.rules())
+      );
+      return data
+        ? res.json(data)
+        : res.status(400).json({ error: 'Failed to update data' });
+    } catch (err) {
+      return res.status(400).json(err);
+    }
   }
 
   /**
