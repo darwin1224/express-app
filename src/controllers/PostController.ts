@@ -2,8 +2,9 @@ import * as joi from 'joi';
 import { Request, Response } from 'express';
 import { PostRepository } from '../repositories/PostRepository';
 import { PostRequest } from '../requests/PostRequest';
+import { Controller } from './Controller';
 
-export class PostController {
+export class PostController extends Controller {
   /**
    * The repository instance
    *
