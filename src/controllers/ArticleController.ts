@@ -20,10 +20,12 @@ export class ArticleController extends Controller {
    * @returns {Promise<Response>}
    */
   public async index(req: Request, res: Response): Promise<Response> {
-    const data = await this.article.getAllArticle();
-    return data
-      ? res.json(data)
-      : res.status(400).json({ error: 'Failed to get data' });
+    try {
+      const data = await this.article.getAllArticle();
+      return res.json(data);
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
   }
 
   /**
@@ -34,10 +36,12 @@ export class ArticleController extends Controller {
    * @returns {Promise<Response>}
    */
   public async show(req: Request, res: Response): Promise<Response> {
-    const data = await this.article.getArticleById(req.params.id);
-    return data
-      ? res.json(data)
-      : res.status(404).json({ error: 'Data not found' });
+    try {
+      const data = await this.article.getArticleById(req.params.id);
+      return res.json(data);
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
   }
 
   /**
@@ -52,9 +56,7 @@ export class ArticleController extends Controller {
       const data = await this.article.insertArticle(
         await joi.validate(req.body, PostRequest.rules())
       );
-      return data
-        ? res.status(201).json(data)
-        : res.status(400).json({ error: 'Failed to insert data' });
+      return res.status(201).json(data);
     } catch (err) {
       return res.status(400).json(err);
     }
@@ -73,9 +75,7 @@ export class ArticleController extends Controller {
         req.params.id,
         await joi.validate(req.body, PostRequest.rules())
       );
-      return data
-        ? res.json(data)
-        : res.status(400).json({ error: 'Failed to update data' });
+      return res.json(data);
     } catch (err) {
       return res.status(400).json(err);
     }
@@ -89,9 +89,11 @@ export class ArticleController extends Controller {
    * @returns {Promise<Response>}
    */
   public async destroy(req: Request, res: Response): Promise<Response> {
-    const data = await this.article.deleteArticle(req.params.id);
-    return data
-      ? res.json(data)
-      : res.status(400).json({ error: 'Failed to delete data' });
+    try {
+      const data = await this.article.deleteArticle(req.params.id);
+      return res.json(data);
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
   }
 }

@@ -20,10 +20,12 @@ export class PostController extends Controller {
    * @returns {Promise<Response>}
    */
   public async index(req: Request, res: Response): Promise<Response> {
-    const data = await this.post.getAllPost();
-    return data
-      ? res.json(data)
-      : res.status(400).json({ error: 'Failed to get data' });
+    try {
+      const data = await this.post.getAllPost();
+      return res.json(data);
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
   }
 
   /**
@@ -34,10 +36,12 @@ export class PostController extends Controller {
    * @returns {Promise<Response>}
    */
   public async show(req: Request, res: Response): Promise<Response> {
-    const data = await this.post.getPostById(req.params.id);
-    return data
-      ? res.json(data)
-      : res.status(404).json({ error: 'Data not found' });
+    try {
+      const data = await this.post.getPostById(req.params.id);
+      return res.json(data);
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
   }
 
   /**
@@ -47,14 +51,12 @@ export class PostController extends Controller {
    * @param {Response} res
    * @returns {Promise<Response>}
    */
-  public async store(req: Request, res: Response): Promise<any> {
+  public async store(req: Request, res: Response): Promise<Response> {
     try {
-      const data = await this.post.insertPost(
+      const store = await this.post.insertPost(
         await joi.validate(req.body, PostRequest.rules())
       );
-      return data
-        ? res.status(201).json(data)
-        : res.status(400).json({ error: 'Failed to insert data' });
+      return res.status(201).json(store);
     } catch (err) {
       return res.status(400).json(err);
     }
@@ -69,13 +71,11 @@ export class PostController extends Controller {
    */
   public async update(req: Request, res: Response): Promise<Response> {
     try {
-      const data = await this.post.updatePost(
+      const update = await this.post.updatePost(
         req.params.id,
         await joi.validate(req.body, PostRequest.rules())
       );
-      return data
-        ? res.json(data)
-        : res.status(400).json({ error: 'Failed to update data' });
+      return res.json(update);
     } catch (err) {
       return res.status(400).json(err);
     }
@@ -89,9 +89,11 @@ export class PostController extends Controller {
    * @returns {Promise<Response>}
    */
   public async destroy(req: Request, res: Response): Promise<Response> {
-    const data = await this.post.deletePost(req.params.id);
-    return data
-      ? res.json(data)
-      : res.status(400).json({ error: 'Failed to delete data' });
+    try {
+      const destroy = await this.post.deletePost(req.params.id);
+      return res.json(destroy);
+    } catch (err) {
+      return res.status(400).json({ error: err.message });
+    }
   }
 }
