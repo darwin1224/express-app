@@ -10,7 +10,7 @@ export class ArticleController extends Controller {
    *
    * @type {ArticleRepository}
    */
-  private article: ArticleRepository = new ArticleRepository();
+  private readonly article: ArticleRepository = new ArticleRepository();
 
   /**
    * Get all data in storage

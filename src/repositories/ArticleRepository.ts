@@ -9,7 +9,10 @@ export class ArticleRepository implements ArticleContract {
    *
    * @type {Model<Article>}
    */
-  private article: Model<Article> = model<Article>('Article', ArticleModel);
+  private readonly article: Model<Article> = model<Article>(
+    'Article',
+    ArticleModel
+  );
 
   /**
    * Get all data

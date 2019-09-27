@@ -7,7 +7,7 @@ export class AuthRoute {
    *
    * @type {AuthController}
    */
-  public auth: AuthController = new AuthController();
+  private readonly auth: AuthController = new AuthController();
 
   /**
    * Bootstrap the routes

@@ -8,7 +8,7 @@ export class PostRoute {
    *
    * @type {PostController}
    */
-  private post: PostController = new PostController();
+  private readonly post: PostController = new PostController();
 
   /**
    * Bootstrap the routes

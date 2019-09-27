@@ -10,7 +10,7 @@ export class PostController extends Controller {
    *
    * @type {PostRepository}
    */
-  private post: PostRepository = new PostRepository();
+  private readonly post: PostRepository = new PostRepository();
 
   /**
    * Get all data in storage

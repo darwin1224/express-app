@@ -8,7 +8,7 @@ export class ArticleRoute {
    *
    * @type {ArticleController}
    */
-  private article: ArticleController = new ArticleController();
+  private readonly article: ArticleController = new ArticleController();
 
   /**
    * Bootstrap the routes

@@ -9,7 +9,7 @@ export class PostRepository implements PostContract {
    *
    * @type {Model<Post>}
    */
-  private post: Model<Post> = model<Post>('Post', PostModel);
+  private readonly post: Model<Post> = model<Post>('Post', PostModel);
 
   /**
    * Get all data

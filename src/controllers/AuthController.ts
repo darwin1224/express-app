@@ -1,7 +1,9 @@
 import * as jwt from 'jsonwebtoken';
+import * as joi from 'joi';
 import { Request, Response } from 'express';
 import { UserRepository } from '../repositories/UserRepository';
 import { Controller } from './Controller';
+import { AuthRequest } from '../requests/AuthRequest';
 
 export class AuthController extends Controller {
   /**
@@ -9,7 +11,7 @@ export class AuthController extends Controller {
    *
    * @type {UserRepository}
    */
-  private user: UserRepository = new UserRepository();
+  private readonly user: UserRepository = new UserRepository();
 
   /**
    * Login user
@@ -54,16 +56,37 @@ export class AuthController extends Controller {
     req: Request,
     res: Response
   ): Promise<Response | boolean> {
-    const login = await this.user.getUserByUsernameAndPassword(
-      req.body.username,
-      req.body.password
-    );
+    try {
+      const value = await this.validateLogin(req);
 
-    if (!login) {
-      return res.status(401).json({ error: 'Invalid username and password' });
+      if (
+        !(await this.user.getUserByUsernameAndPassword(
+          value.username,
+          value.password
+        ))
+      ) {
+        return res.status(401).json({ error: 'Invalid username and password' });
+      }
+
+      return true;
+    } catch (err) {
+      return res.status(400).json(err);
     }
+  }
 
-    return true;
+  /**
+   * Validate login fields
+   *
+   * @param {Request} req
+   * @returns {joi.ValidationResult<{ username: string; password: string }>}
+   */
+  protected validateLogin(
+    req: Request
+  ): joi.ValidationResult<{ username: string; password: string }> {
+    return joi.validate(
+      { username: req.body.username, password: req.body.password },
+      AuthRequest.rules()
+    );
   }
 
   /**

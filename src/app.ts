@@ -20,21 +20,21 @@ class App {
    *
    * @type {AuthRoute}
    */
-  public auth: AuthRoute = new AuthRoute();
+  public readonly auth: AuthRoute = new AuthRoute();
 
   /**
    * Post route instance
    *
    * @type {PostRoute}
    */
-  public post: PostRoute = new PostRoute();
+  public readonly post: PostRoute = new PostRoute();
 
   /**
    * Article route instance
    *
    * @type {ArticleRoute}
    */
-  public article: ArticleRoute = new ArticleRoute();
+  public readonly article: ArticleRoute = new ArticleRoute();
 
   /**
    * Port number
