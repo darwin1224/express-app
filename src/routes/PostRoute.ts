@@ -1,6 +1,6 @@
 import { PostController } from '../controllers/PostController';
 import { Application, Request, Response } from 'express';
-import { auth } from '../middlewares/Authenticate';
+import { Authenticate } from '../middlewares/Authenticate';
 
 export class PostRoute {
   /**
@@ -20,36 +20,56 @@ export class PostRoute {
     /**
      * GET /post
      */
-    app.get('/post', auth, (req: Request, res: Response): void => {
-      this.post.index(req, res);
-    });
+    app.get(
+      '/post',
+      Authenticate.guard,
+      (req: Request, res: Response): void => {
+        this.post.index(req, res);
+      }
+    );
 
     /**
      * GET /post/:id
      */
-    app.get('/post/:id', (req: Request, res: Response): void => {
-      this.post.show(req, res);
-    });
+    app.get(
+      '/post/:id',
+      Authenticate.guard,
+      (req: Request, res: Response): void => {
+        this.post.show(req, res);
+      }
+    );
 
     /**
      * POST /post
      */
-    app.post('/post', (req: Request, res: Response): void => {
-      this.post.store(req, res);
-    });
+    app.post(
+      '/post',
+      Authenticate.guard,
+      (req: Request, res: Response): void => {
+        this.post.store(req, res);
+      }
+    );
 
     /**
      * PUT /post/:id
      */
-    app.put('/post/:id', (req: Request, res: Response): void => {
-      this.post.update(req, res);
-    });
+    app.put(
+      '/post/:id',
+      Authenticate.guard,
+      (req: Request, res: Response): void => {
+        this.post.update(req, res);
+      }
+    );
 
     /**
      * DELETE /post/:id
      */
-    app.delete('/post/:id', (req: Request, res: Response): void => {
-      this.post.destroy(req, res);
-    });
+    app.delete(
+      '/post/:id',
+      Authenticate.guard,
+      (req: Request, res: Response): void => {
+        this.post.destroy(req, res);
+      }
+    );
   }
 }
