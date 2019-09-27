@@ -34,10 +34,16 @@
     "@types/mongoose": "^5.5.18",
     "@types/morgan": "^1.7.37",
     "@types/node": "^12.7.8",
+    "@typescript-eslint/eslint-plugin": "^2.3.1",
+    "@typescript-eslint/parser": "^2.3.1",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "eslint": "^6.4.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-prettier": "^3.1.1",
     "mocha": "^6.2.0",
     "nodemon": "^1.19.2",
+    "prettier": "^1.18.2",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.3"
   }

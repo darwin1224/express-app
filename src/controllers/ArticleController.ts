@@ -54,7 +54,7 @@ export class ArticleController extends Controller {
   public async store(req: Request, res: Response): Promise<Response> {
     try {
       const data = await this.article.insertArticle(
-        await joi.validate(req.body, PostRequest.rules())
+        await joi.validate(req.body, PostRequest.rules()),
       );
       return res.status(201).json(data);
     } catch (err) {
@@ -73,7 +73,7 @@ export class ArticleController extends Controller {
     try {
       const data = await this.article.updateArticle(
         req.params.id,
-        await joi.validate(req.body, PostRequest.rules())
+        await joi.validate(req.body, PostRequest.rules()),
       );
       return res.json(data);
     } catch (err) {

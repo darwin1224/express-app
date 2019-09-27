@@ -13,10 +13,10 @@ export class Authenticate {
   public static guard = (
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ): void | boolean | Response => {
     try {
-      const token: string = req.get('Authorization')!;
+      const token = req.get('Authorization') as string;
       return jwt.verify(token, '123456') ? next() : false;
     } catch (err) {
       return res.status(401).json({ error: err.message });

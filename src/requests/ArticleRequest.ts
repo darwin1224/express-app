@@ -16,7 +16,7 @@ export class ArticleRequest {
       body: joi
         .string()
         .min(4)
-        .required()
+        .required(),
     });
   }
 }

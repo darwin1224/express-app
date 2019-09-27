@@ -34,7 +34,7 @@ export interface ArticleContract {
    */
   updateArticle(
     id: string,
-    params: Article
+    params: Article,
   ): DocumentQuery<Article | null, Article>;
 
   /**

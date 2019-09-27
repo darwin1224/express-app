@@ -25,7 +25,7 @@ export class ArticleRoute {
       Authenticate.guard,
       (req: Request, res: Response): void => {
         this.article.index(req, res);
-      }
+      },
     );
 
     /**
@@ -36,7 +36,7 @@ export class ArticleRoute {
       Authenticate.guard,
       (req: Request, res: Response): void => {
         this.article.show(req, res);
-      }
+      },
     );
 
     /**
@@ -47,7 +47,7 @@ export class ArticleRoute {
       Authenticate.guard,
       (req: Request, res: Response): void => {
         this.article.store(req, res);
-      }
+      },
     );
 
     /**
@@ -58,7 +58,7 @@ export class ArticleRoute {
       Authenticate.guard,
       (req: Request, res: Response): void => {
         this.article.update(req, res);
-      }
+      },
     );
 
     /**
@@ -69,7 +69,7 @@ export class ArticleRoute {
       Authenticate.guard,
       (req: Request, res: Response): void => {
         this.article.destroy(req, res);
-      }
+      },
     );
   }
 }

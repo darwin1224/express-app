@@ -54,7 +54,7 @@ export class PostController extends Controller {
   public async store(req: Request, res: Response): Promise<Response> {
     try {
       const store = await this.post.insertPost(
-        await joi.validate(req.body, PostRequest.rules())
+        await joi.validate(req.body, PostRequest.rules()),
       );
       return res.status(201).json(store);
     } catch (err) {
@@ -73,7 +73,7 @@ export class PostController extends Controller {
     try {
       const update = await this.post.updatePost(
         req.params.id,
-        await joi.validate(req.body, PostRequest.rules())
+        await joi.validate(req.body, PostRequest.rules()),
       );
       return res.json(update);
     } catch (err) {

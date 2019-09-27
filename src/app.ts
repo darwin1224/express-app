@@ -1,8 +1,8 @@
-import * as express from 'express';
-import * as cors from 'cors';
-import * as bodyParser from 'body-parser';
-import * as morgan from 'morgan';
-import * as mongoose from 'mongoose';
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import mongoose from 'mongoose';
 import { PostRoute } from './routes/PostRoute';
 import { ArticleRoute } from './routes/ArticleRoute';
 import { AuthRoute } from './routes/AuthRoute';
@@ -109,7 +109,7 @@ class App {
   protected setUpMongoDb(): void {
     mongoose.connect(this.mongoUrl, {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     });
     mongoose.connection.once('open', (): void => {
       console.log(`Database is connected at ${this.mongoUrl}`);
@@ -160,9 +160,11 @@ class App {
    * @returns {void}
    */
   protected listen(): void {
-    this.app.listen(this.port, (): void => {
-      console.log(`Server is running at port ${this.port}`);
-    });
+    if (!module.parent) {
+      this.app.listen(this.port, (): void => {
+        console.log(`Server is running at port ${this.port}`);
+      });
+    }
   }
 }
 

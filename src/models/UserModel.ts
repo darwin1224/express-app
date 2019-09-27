@@ -9,7 +9,7 @@ export const UserModel: Schema = new Schema({
   name: {
     type: String,
     required: true,
-    maxlength: 50
+    maxlength: 50,
   },
 
   /**
@@ -20,7 +20,7 @@ export const UserModel: Schema = new Schema({
   username: {
     type: String,
     required: true,
-    maxlength: 100
+    maxlength: 100,
   },
 
   /**
@@ -30,6 +30,6 @@ export const UserModel: Schema = new Schema({
    */
   password: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });

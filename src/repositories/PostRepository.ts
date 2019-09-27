@@ -49,7 +49,7 @@ export class PostRepository implements PostContract {
    */
   public updatePost(
     id: string,
-    params: Post
+    params: Post,
   ): DocumentQuery<Post | null, Post> {
     return this.post.findByIdAndUpdate(id, params);
   }

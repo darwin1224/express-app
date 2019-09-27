@@ -38,7 +38,7 @@ export class UserRepository {
    */
   public getUserByUsernameAndPassword(
     username: string,
-    password: string
+    password: string,
   ): DocumentQuery<User | null, User> {
     return this.user.findOne({ username, password });
   }
@@ -62,7 +62,7 @@ export class UserRepository {
    */
   public updateUser(
     id: string,
-    params: User
+    params: User,
   ): DocumentQuery<User | null, User> {
     return this.user.findByIdAndUpdate(id, params);
   }

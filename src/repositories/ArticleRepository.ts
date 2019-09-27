@@ -11,7 +11,7 @@ export class ArticleRepository implements ArticleContract {
    */
   private readonly article: Model<Article> = model<Article>(
     'Article',
-    ArticleModel
+    ArticleModel,
   );
 
   /**
@@ -52,7 +52,7 @@ export class ArticleRepository implements ArticleContract {
    */
   public updateArticle(
     id: string,
-    params: Article
+    params: Article,
   ): DocumentQuery<Article | null, Article> {
     return this.article.findByIdAndUpdate(id, params);
   }

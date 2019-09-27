@@ -16,7 +16,7 @@ export class AuthRequest {
       password: joi
         .string()
         .min(4)
-        .required()
+        .required(),
     });
   }
 }

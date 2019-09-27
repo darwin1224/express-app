@@ -16,7 +16,7 @@ export class PostRequest {
       body: joi
         .string()
         .min(4)
-        .required()
+        .required(),
     });
   }
 }

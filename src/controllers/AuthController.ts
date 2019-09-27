@@ -54,7 +54,7 @@ export class AuthController extends Controller {
    */
   protected async attemptLogin(
     req: Request,
-    res: Response
+    res: Response,
   ): Promise<Response | boolean> {
     try {
       const value = await this.validateLogin(req);
@@ -62,7 +62,7 @@ export class AuthController extends Controller {
       if (
         !(await this.user.getUserByUsernameAndPassword(
           value.username,
-          value.password
+          value.password,
         ))
       ) {
         return res.status(401).json({ error: 'Invalid username and password' });
@@ -81,11 +81,11 @@ export class AuthController extends Controller {
    * @returns {joi.ValidationResult<{ username: string; password: string }>}
    */
   protected validateLogin(
-    req: Request
+    req: Request,
   ): joi.ValidationResult<{ username: string; password: string }> {
     return joi.validate(
       { username: req.body.username, password: req.body.password },
-      AuthRequest.rules()
+      AuthRequest.rules(),
     );
   }
 
@@ -98,7 +98,7 @@ export class AuthController extends Controller {
   protected getJwtToken(req: Request): string {
     return jwt.sign(req.body, '123456', {
       algorithm: 'HS256',
-      expiresIn: '1h'
+      expiresIn: '1h',
     });
   }
 }

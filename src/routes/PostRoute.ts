@@ -25,7 +25,7 @@ export class PostRoute {
       Authenticate.guard,
       (req: Request, res: Response): void => {
         this.post.index(req, res);
-      }
+      },
     );
 
     /**
@@ -36,7 +36,7 @@ export class PostRoute {
       Authenticate.guard,
       (req: Request, res: Response): void => {
         this.post.show(req, res);
-      }
+      },
     );
 
     /**
@@ -47,7 +47,7 @@ export class PostRoute {
       Authenticate.guard,
       (req: Request, res: Response): void => {
         this.post.store(req, res);
-      }
+      },
     );
 
     /**
@@ -58,7 +58,7 @@ export class PostRoute {
       Authenticate.guard,
       (req: Request, res: Response): void => {
         this.post.update(req, res);
-      }
+      },
     );
 
     /**
@@ -69,7 +69,7 @@ export class PostRoute {
       Authenticate.guard,
       (req: Request, res: Response): void => {
         this.post.destroy(req, res);
-      }
+      },
     );
   }
 }
