@@ -5,8 +5,9 @@
     "pretty": true,
     "sourceMap": true,
     "lib": ["es2015"],
-    "strict": true,
+    // "strict": true,
     "declaration": true,
+    "esModuleInterop": true,
     "target": "es5",
     "outDir": "./dist",
     "baseUrl": "./src"

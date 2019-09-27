@@ -9,7 +9,10 @@ export class ArticleRepository implements ArticleContract {
    *
    * @type {Model<Article>}
    */
-  private article: Model<Article> = model<Article>('Article', ArticleModel);
+  private readonly article: Model<Article> = model<Article>(
+    'Article',
+    ArticleModel,
+  );
 
   /**
    * Get all data
@@ -49,7 +52,7 @@ export class ArticleRepository implements ArticleContract {
    */
   public updateArticle(
     id: string,
-    params: Article
+    params: Article,
   ): DocumentQuery<Article | null, Article> {
     return this.article.findByIdAndUpdate(id, params);
   }

@@ -9,7 +9,7 @@ export class PostRepository implements PostContract {
    *
    * @type {Model<Post>}
    */
-  private post: Model<Post> = model<Post>('Post', PostModel);
+  private readonly post: Model<Post> = model<Post>('Post', PostModel);
 
   /**
    * Get all data
@@ -49,7 +49,7 @@ export class PostRepository implements PostContract {
    */
   public updatePost(
     id: string,
-    params: Post
+    params: Post,
   ): DocumentQuery<Post | null, Post> {
     return this.post.findByIdAndUpdate(id, params);
   }

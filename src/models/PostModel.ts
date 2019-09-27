@@ -9,7 +9,7 @@ export const PostModel: Schema = new Schema({
   title: {
     type: String,
     required: true,
-    maxlength: 50
+    maxlength: 50,
   },
 
   /**
@@ -18,6 +18,6 @@ export const PostModel: Schema = new Schema({
    * @type {{ type: string }}
    */
   body: {
-    type: String
-  }
+    type: String,
+  },
 });
