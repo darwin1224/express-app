@@ -8,7 +8,7 @@ export class UserRepository {
    *
    * @type {Model<User>}
    */
-  public user: Model<User> = model<User>('User', UserModel);
+  private user: Model<User> = model<User>('User', UserModel);
 
   /**
    * Get all data
