@@ -46,6 +46,21 @@ services:
     networks:
       - app
 
+  apache:
+    image: httpd:alpine
+    container_name: apache
+    volumes:
+      - ./:/var/www/html
+      - ./apache.conf:/usr/local/apache2/conf/httpd.conf
+    ports:
+      - ${APACHE_PORT}:${APACHE_PORT}
+    depends_on: 
+      - backend
+    tty: true
+    restart: always
+    networks: 
+      - app
+
   mongo-express:
     image: mongo-express:latest
     container_name: mongo-express
