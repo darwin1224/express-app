@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import { PostRoute } from './routes/PostRoute';
 import { ArticleRoute } from './routes/ArticleRoute';
 import { AuthRoute } from './routes/AuthRoute';
+import { BookRoute } from './routes/BookRoute';
 
 class App {
   /**
@@ -35,6 +36,13 @@ class App {
    * @type {ArticleRoute}
    */
   public readonly article: ArticleRoute = new ArticleRoute();
+
+  /**
+   * Article route instance
+   *
+   * @type {BookRoute}
+   */
+  public readonly book: BookRoute = new BookRoute();
 
   /**
    * Port number
@@ -125,6 +133,7 @@ class App {
     this.setAuthRoute();
     this.setPostRoute();
     this.setArticleRoute();
+    this.setBookRoute();
   }
 
   /**
@@ -152,6 +161,15 @@ class App {
    */
   protected setArticleRoute(): void {
     this.article.routes(this.app);
+  }
+
+  /**
+   * Set article routes
+   *
+   * @returns {void}
+   */
+  protected setBookRoute(): void {
+    this.book.routes(this.app);
   }
 
   /**
