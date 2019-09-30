@@ -10,7 +10,7 @@
       "name": "Launch Node in Local",
       "runtimeExecutable": "yarn",
       "runtimeArgs": [
-        "watch"
+        "dev:local"
       ],
       "port": 9229,
       "restart": true,
