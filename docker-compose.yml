@@ -54,25 +54,23 @@ services:
       - ME_CONFIG_MONGODB_SERVER=database
     ports:
       - ${MONGO_EXPRESS_PORT}:${MONGO_EXPRESS_PORT}
-    depends_on: 
-      - database
-    tty: true
-    restart: always
-    networks: 
-      - app
-
-  mongo-express:
-    image: mongo-express:latest
-    container_name: mongo-express
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=database
-    ports:
-      - ${MONGO_EXPRESS_PORT}:${MONGO_EXPRESS_PORT}
     depends_on:
       - database
     tty: true
     restart: always
     networks:
+      - app
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    depends_on: 
+      - backend
+    tty: true
+    restart: always
+    networks: 
       - app
 
 volumes:
