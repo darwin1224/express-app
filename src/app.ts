@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
+import redis from 'redis';
 import { PostRoute } from './routes/PostRoute';
 import { ArticleRoute } from './routes/ArticleRoute';
 import { AuthRoute } from './routes/AuthRoute';
@@ -15,6 +16,13 @@ class App {
    * @type {express.Application}
    */
   public app: express.Application = express();
+
+  /**
+   * Redis client instance
+   *
+   * @type {redis.RedisClient}
+   */
+  public client: redis.RedisClient = redis.createClient({ host: 'redis' });
 
   /**
    * Auth route instance
@@ -79,6 +87,7 @@ class App {
     this.setUpBodyParser();
     this.setUpMorgan();
     this.setUpMongoDb();
+    this.setUpRedis();
   }
 
   /**
@@ -121,6 +130,20 @@ class App {
     });
     mongoose.connection.once('open', (): void => {
       console.log(`Database is connected at ${this.mongoUrl}`);
+    });
+  }
+
+  /**
+   * Set up redis
+   *
+   * @returns {void}
+   */
+  protected setUpRedis(): void {
+    this.client.on('ready', (): void => {
+      console.log('Redis server is connected');
+    });
+    this.client.on('error', (err: any): void => {
+      console.log(err);
     });
   }
 
