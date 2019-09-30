@@ -12,6 +12,7 @@ services:
       - ./:/var/www/html
     ports:
       - ${NODE_PORT}:${NODE_PORT}
+      - ${NODE_INSPECT_PORT}:${NODE_INSPECT_PORT}
     depends_on:
       - database
     tty: true

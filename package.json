@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node ./src/app.ts",
-    "dev": "nodemon --exec 'ts-node' ./src/app.ts",
+    "start:local": "node --inspect=localhost:9229 -r ts-node/register ./src/app.ts",
+    "dev:local": "nodemon --exec node --inspect=localhost:9229 -r ts-node/register ./src/app.ts",
+    "start:docker": "node --inspect=0.0.0.0 -r ts-node/register ./src/app.ts",
+    "dev:docker": "nodemon --exec node --inspect=0.0.0.0 --require ts-node/register ./src/app.ts",
     "test": "mocha -r ts-node/register ./tests/**/*.spec.ts",
     "build": "tsc",
     "prod": "yarn build && pm2-runtime --watch ./dist/app.js"
