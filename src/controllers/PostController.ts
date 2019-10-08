@@ -3,6 +3,10 @@ import { Request, Response } from 'express';
 import { PostRepository } from '../repositories/PostRepository';
 import { PostRequest } from '../requests/PostRequest';
 import { Controller } from './Controller';
+import { DataNotFoundException } from '../exceptions/DataNotFoundException';
+import { InsertFailedException } from '../exceptions/InsertFailedException';
+import { UpdateFailedException } from '../exceptions/UpdateFailedException';
+import { DeleteFailedException } from '../exceptions/DeleteFailedException';
 
 export class PostController extends Controller {
   /**
@@ -24,7 +28,7 @@ export class PostController extends Controller {
       const data = await this.post.getAllPost();
       return res.json(data);
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(400).json(new DataNotFoundException(err.message));
     }
   }
 
@@ -40,7 +44,7 @@ export class PostController extends Controller {
       const data = await this.post.getPostById(req.params.id);
       return res.json(data);
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(400).json(new DataNotFoundException(err.message));
     }
   }
 
@@ -58,7 +62,7 @@ export class PostController extends Controller {
       );
       return res.status(201).json(store);
     } catch (err) {
-      return res.status(400).json(err);
+      return res.status(400).json(new InsertFailedException(err.message));
     }
   }
 
@@ -77,7 +81,7 @@ export class PostController extends Controller {
       );
       return res.json(update);
     } catch (err) {
-      return res.status(400).json(err);
+      return res.status(400).json(new UpdateFailedException(err.message));
     }
   }
 
@@ -93,7 +97,7 @@ export class PostController extends Controller {
       const destroy = await this.post.deletePost(req.params.id);
       return res.json(destroy);
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(400).json(new DeleteFailedException(err.message));
     }
   }
 }
