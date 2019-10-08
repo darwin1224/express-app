@@ -15,4 +15,4 @@ COPY . .
 
 EXPOSE ${NODE_PORT}
 
-CMD [ "yarn", "dev" ]
+CMD [ "yarn", "dev:docker" ]

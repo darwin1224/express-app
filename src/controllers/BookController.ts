@@ -1,20 +1,20 @@
 import * as joi from 'joi';
 import { Request, Response } from 'express';
-import { PostRepository } from '../repositories/PostRepository';
-import { PostRequest } from '../requests/PostRequest';
+import { BookRepository } from '../repositories/BookRepository';
+import { BookRequest } from '../requests/BookRequest';
 import { Controller } from './Controller';
 import { DataNotFoundException } from '../exceptions/DataNotFoundException';
 import { InsertFailedException } from '../exceptions/InsertFailedException';
 import { UpdateFailedException } from '../exceptions/UpdateFailedException';
 import { DeleteFailedException } from '../exceptions/DeleteFailedException';
 
-export class PostController extends Controller {
+export class BookController extends Controller {
   /**
    * The repository instance
    *
-   * @type {PostRepository}
+   * @type {BookRepository}
    */
-  private readonly post: PostRepository = new PostRepository();
+  private readonly book: BookRepository = new BookRepository();
 
   /**
    * Get all data in storage
@@ -25,7 +25,7 @@ export class PostController extends Controller {
    */
   public async index(req: Request, res: Response): Promise<Response> {
     try {
-      const data = await this.post.getAllPost();
+      const data = await this.book.getAllBook();
       return res.json(data);
     } catch (err) {
       return res.status(400).json(new DataNotFoundException(err.message));
@@ -41,7 +41,7 @@ export class PostController extends Controller {
    */
   public async show(req: Request, res: Response): Promise<Response> {
     try {
-      const data = await this.post.getPostById(req.params.id);
+      const data = await this.book.getBookById(req.params.id);
       return res.json(data);
     } catch (err) {
       return res.status(400).json(new DataNotFoundException(err.message));
@@ -57,10 +57,10 @@ export class PostController extends Controller {
    */
   public async store(req: Request, res: Response): Promise<Response> {
     try {
-      const store = await this.post.insertPost(
-        await joi.validate(req.body, PostRequest.rules()),
+      const data = await this.book.insertBook(
+        await joi.validate(req.body, BookRequest.rules()),
       );
-      return res.status(201).json(store);
+      return res.status(201).json(data);
     } catch (err) {
       return res.status(400).json(new InsertFailedException(err.message));
     }
@@ -75,11 +75,11 @@ export class PostController extends Controller {
    */
   public async update(req: Request, res: Response): Promise<Response> {
     try {
-      const update = await this.post.updatePost(
+      const data = await this.book.updateBook(
         req.params.id,
-        await joi.validate(req.body, PostRequest.rules()),
+        await joi.validate(req.body, BookRequest.rules()),
       );
-      return res.json(update);
+      return res.json(data);
     } catch (err) {
       return res.status(400).json(new UpdateFailedException(err.message));
     }
@@ -94,8 +94,8 @@ export class PostController extends Controller {
    */
   public async destroy(req: Request, res: Response): Promise<Response> {
     try {
-      const destroy = await this.post.deletePost(req.params.id);
-      return res.json(destroy);
+      const data = await this.book.deleteBook(req.params.id);
+      return res.json(data);
     } catch (err) {
       return res.status(400).json(new DeleteFailedException(err.message));
     }

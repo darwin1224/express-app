@@ -12,6 +12,7 @@ services:
       - ./:/var/www/html
     ports:
       - ${NODE_PORT}:${NODE_PORT}
+      - ${NODE_INSPECT_PORT}:${NODE_INSPECT_PORT}
     depends_on:
       - database
     tty: true
@@ -58,6 +59,18 @@ services:
     tty: true
     restart: always
     networks:
+      - app
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    depends_on: 
+      - backend
+    tty: true
+    restart: always
+    networks: 
       - app
 
 volumes:

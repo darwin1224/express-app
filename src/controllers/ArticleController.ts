@@ -1,8 +1,12 @@
 import * as joi from 'joi';
 import { Request, Response } from 'express';
 import { ArticleRepository } from '../repositories/ArticleRepository';
-import { PostRequest } from '../requests/PostRequest';
+import { ArticleRequest } from '../requests/ArticleRequest';
 import { Controller } from './Controller';
+import { DataNotFoundException } from '../exceptions/DataNotFoundException';
+import { InsertFailedException } from '../exceptions/InsertFailedException';
+import { UpdateFailedException } from '../exceptions/UpdateFailedException';
+import { DeleteFailedException } from '../exceptions/DeleteFailedException';
 
 export class ArticleController extends Controller {
   /**
@@ -24,7 +28,7 @@ export class ArticleController extends Controller {
       const data = await this.article.getAllArticle();
       return res.json(data);
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(400).json(new DataNotFoundException(err.message));
     }
   }
 
@@ -40,7 +44,7 @@ export class ArticleController extends Controller {
       const data = await this.article.getArticleById(req.params.id);
       return res.json(data);
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(400).json(new DataNotFoundException(err.message));
     }
   }
 
@@ -54,11 +58,11 @@ export class ArticleController extends Controller {
   public async store(req: Request, res: Response): Promise<Response> {
     try {
       const data = await this.article.insertArticle(
-        await joi.validate(req.body, PostRequest.rules()),
+        await joi.validate(req.body, ArticleRequest.rules()),
       );
       return res.status(201).json(data);
     } catch (err) {
-      return res.status(400).json(err);
+      return res.status(400).json(new InsertFailedException(err.message));
     }
   }
 
@@ -73,11 +77,11 @@ export class ArticleController extends Controller {
     try {
       const data = await this.article.updateArticle(
         req.params.id,
-        await joi.validate(req.body, PostRequest.rules()),
+        await joi.validate(req.body, ArticleRequest.rules()),
       );
       return res.json(data);
     } catch (err) {
-      return res.status(400).json(err);
+      return res.status(400).json(new UpdateFailedException(err.message));
     }
   }
 
@@ -93,7 +97,7 @@ export class ArticleController extends Controller {
       const data = await this.article.deleteArticle(req.params.id);
       return res.json(data);
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(400).json(new DeleteFailedException(err.message));
     }
   }
 }

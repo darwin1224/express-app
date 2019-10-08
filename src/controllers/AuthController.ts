@@ -4,6 +4,7 @@ import { Request, Response } from 'express';
 import { UserRepository } from '../repositories/UserRepository';
 import { Controller } from './Controller';
 import { AuthRequest } from '../requests/AuthRequest';
+import { InsertFailedException } from '../exceptions/InsertFailedException';
 
 export class AuthController extends Controller {
   /**
@@ -41,7 +42,7 @@ export class AuthController extends Controller {
       const store = await this.user.insertUser(req.body);
       return res.json(store);
     } catch (err) {
-      return res.status(400).json({ error: err.message });
+      return res.status(400).json(new InsertFailedException(err.message));
     }
   }
 

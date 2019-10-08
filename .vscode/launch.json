@@ -1,0 +1,43 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Node in Local",
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": [
+        "dev:local"
+      ],
+      "port": 9229,
+      "restart": true,
+      "internalConsoleOptions": "openOnSessionStart",
+      "smartStep": true
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Debug Node in Local",
+      "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "protocol": "inspector",
+      "restart": true,
+      "smartStep": true
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Debug Node in Docker",
+      "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/var/www/html",
+      "protocol": "inspector",
+      "restart": true
+    }
+  ]
+}

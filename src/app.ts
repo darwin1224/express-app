@@ -3,9 +3,11 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
+import redis from 'redis';
 import { PostRoute } from './routes/PostRoute';
 import { ArticleRoute } from './routes/ArticleRoute';
 import { AuthRoute } from './routes/AuthRoute';
+import { BookRoute } from './routes/BookRoute';
 
 class App {
   /**
@@ -14,6 +16,13 @@ class App {
    * @type {express.Application}
    */
   public app: express.Application = express();
+
+  /**
+   * Redis client instance
+   *
+   * @type {redis.RedisClient}
+   */
+  public client: redis.RedisClient = redis.createClient({ host: 'redis' });
 
   /**
    * Auth route instance
@@ -35,6 +44,13 @@ class App {
    * @type {ArticleRoute}
    */
   public readonly article: ArticleRoute = new ArticleRoute();
+
+  /**
+   * Article route instance
+   *
+   * @type {BookRoute}
+   */
+  public readonly book: BookRoute = new BookRoute();
 
   /**
    * Port number
@@ -71,6 +87,7 @@ class App {
     this.setUpBodyParser();
     this.setUpMorgan();
     this.setUpMongoDb();
+    this.setUpRedis();
   }
 
   /**
@@ -117,6 +134,20 @@ class App {
   }
 
   /**
+   * Set up redis
+   *
+   * @returns {void}
+   */
+  protected setUpRedis(): void {
+    this.client.on('ready', (): void => {
+      console.log('Redis server is connected');
+    });
+    this.client.on('error', (err: any): void => {
+      console.log(err);
+    });
+  }
+
+  /**
    * Set route path
    *
    * @returns {void}
@@ -125,6 +156,7 @@ class App {
     this.setAuthRoute();
     this.setPostRoute();
     this.setArticleRoute();
+    this.setBookRoute();
   }
 
   /**
@@ -152,6 +184,15 @@ class App {
    */
   protected setArticleRoute(): void {
     this.article.routes(this.app);
+  }
+
+  /**
+   * Set article routes
+   *
+   * @returns {void}
+   */
+  protected setBookRoute(): void {
+    this.book.routes(this.app);
   }
 
   /**
